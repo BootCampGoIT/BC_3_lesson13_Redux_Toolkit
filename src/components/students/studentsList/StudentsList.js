@@ -10,11 +10,10 @@ const StudentsList = () => {
         {students.map((student) => (
           <li key={student.id} className='studentsListItem'>
             <p>
-              Name:<span> </span>
+              First name:<span> </span>
               {student.firstName}
-              <span> </span>
-              {student.lastName}
             </p>
+            <p>Last name: {student.lastName}</p>
           </li>
         ))}
       </ul>

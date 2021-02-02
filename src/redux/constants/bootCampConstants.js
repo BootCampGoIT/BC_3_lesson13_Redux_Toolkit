@@ -1,4 +1,4 @@
-const ADDNEWCAMP = "@bootCamps/adNewCamp";
+const ADDNEWCAMP = "@bootCamps/addNewCamp";
 const DELETECAMP = "@bootCamps/deleteCamp";
 const SETFILTER = "@bootCamps/setFilter";
 const SETALERT = "@bootCamps/setALERT";

@@ -25,12 +25,14 @@ const BootCampList = () => {
 
   return (
     <BootCampFormContainer>
-      <div className="options">
+      <div className='options'>
         <h2>Bootcamps count: {bootCamps.length}</h2>
-        <label>
-          Filter
-          <input type='text' onChange={onHandleChange} value={filter} />
-        </label>
+        {!!bootCamps.length && (
+          <label>
+            Filter
+            <input type='text' onChange={onHandleChange} value={filter} />
+          </label>
+        )}
       </div>
 
       <ul className='campList'>

@@ -1,106 +1,103 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-    addNewCamp,
-    deleteCamp,
-    setAlert,
-} from "../../../redux/actions/bootCampActions";
+import { addNewCamp, deleteCamp, setAlert } from "../../../redux/actions/bootCampActions";
+// import { deleteCamp, setAlert } from "../../../redux/actions/bootCampActions";
+
+// import { addNewCamp } from "../../../redux/slices/bootCampSlice";
+import { BootCampFormContainer } from "./BootCampFormStyled";
 
 const initialCamp = {
-    campName: "",
-    campNumber: "",
-    students: [],
+  campName: "",
+  campNumber: "",
+  students: [],
 };
 
 class BootCampForm extends Component {
-    state = { ...initialCamp };
+  state = { ...initialCamp };
 
-    onHandleSubmit = (e) => {
-        e.preventDefault();
-        this.props.addNewCamp(this.state);
-        this.setState({ ...initialCamp });
-    };
+  onHandleSubmit = (e) => {
+    e.preventDefault();
+    this.props.addNewCamp(this.state);
+    this.setState({ ...initialCamp });
+  };
 
-    onHandleChange = (e) => {
-        const { name, value } = e.target;
-        this.props.alert && this.props.setAlert();
-        this.setState({ [name]: value });
-    };
+  onHandleChange = (e) => {
+    const { name, value } = e.target;
+    this.props.alert && this.props.setAlert();
+    this.setState({ [name]: value });
+  };
 
-    onHandleClick = (e) => {
-        const id = e.target.id;
-        const student = this.props.students.find(
-            (student) => student.id === id
-        );
-        this.setState((prev) => ({
-            ...prev,
-            students: [...prev.students, student],
-        }));
-    };
+  onHandleClick = (e) => {
+    const id = e.target.id;
+    const student = this.props.students.find((student) => student.id === id);
+    this.setState((prev) => ({
+      ...prev,
+      students: [...prev.students, student],
+    }));
+  };
 
-    render() {
-        return (
-            <>
-                {this.props.alert && <h2>Something went wrong</h2>}
-                <form onSubmit={this.onHandleSubmit}>
-                    <label>
-                        Camp name
-                        <input
-                            type="text"
-                            name="campName"
-                            onChange={this.onHandleChange}
-                            value={this.state.campName}
-                        />
-                    </label>
-                    <label>
-                        Camp number
-                        <input
-                            type="text"
-                            name="campNumber"
-                            onChange={this.onHandleChange}
-                            value={this.state.campNumber}
-                        />
-                    </label>
-                    <button type="submit">Save</button>
-                </form>
-                <ul>
-                    {this.props.students.map((student) => (
-                        <li key={student.id}>
-                            <p>
-                                {student.firstName}
-                                <span> </span>
-                                {student.lastName}
-                            </p>
-                            <button
-                                type="button"
-                                id={student.id}
-                                onClick={this.onHandleClick}
-                            >
-                                Add Student
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </>
-        );
-    }
+  render() {
+    return (
+      <BootCampFormContainer>
+        {this.props.alert && <h2>Something went wrong</h2>}
+        <form onSubmit={this.onHandleSubmit}>
+          <label>
+            Camp name
+            <input
+              type='text'
+              name='campName'
+              onChange={this.onHandleChange}
+              value={this.state.campName}
+            />
+          </label>
+          <label>
+            Camp number
+            <input
+              type='text'
+              name='campNumber'
+              onChange={this.onHandleChange}
+              value={this.state.campNumber}
+            />
+          </label>
+          <button type='submit'>Save</button>
+        </form>
+        <ul className='studentsList'>
+          {this.props.students.map((student) => (
+            <li key={student.id} className='studentsListItem'>
+              <p>
+                {student.firstName}
+                <span> </span>
+                {student.lastName}
+              </p>
+              <button
+                type='button'
+                id={student.id}
+                onClick={this.onHandleClick}>
+                Add Student
+              </button>
+            </li>
+          ))}
+        </ul>
+      </BootCampFormContainer>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        alert: state.alert,
-        students: state.students.items,
-    };
+  return {
+    alert: state.alert,
+    students: state.students.items,
+  };
 };
 const mapDispatchToProps = (dispatch) => {
-    return {
-        addNewCamp: (camp) => {
-            dispatch(addNewCamp(camp));
-        },
-        setAlert: () => {
-            dispatch(setAlert());
-        },
-    };
+  return {
+    addNewCamp: (camp) => {
+      dispatch(addNewCamp(camp));
+    },
+    setAlert: () => {
+      dispatch(setAlert());
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BootCampForm);
